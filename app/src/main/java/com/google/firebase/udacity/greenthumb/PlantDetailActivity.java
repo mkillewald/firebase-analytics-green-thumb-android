@@ -66,6 +66,7 @@ public class PlantDetailActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         mItemDescription = (TextView) findViewById(R.id.text_view_item_description);
@@ -126,6 +127,8 @@ public class PlantDetailActivity extends AppCompatActivity
         mToolbar.setTitle(mPlant.name);
         mItemDescription.setText(mPlant.description);
         mItemPrice.setText(getString(R.string.plant_credits, mPlant.price));
+
+        Analytics.logEventPlantDetailViewed(this, mPlant);
     }
 
     @Override

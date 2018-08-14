@@ -58,6 +58,7 @@ public class ShoppingCartActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.shopping_cart_title);
         setSupportActionBar(toolbar);
@@ -82,6 +83,8 @@ public class ShoppingCartActivity extends AppCompatActivity
         mButtonCheckout.setOnClickListener(this);
 
         getSupportLoaderManager().initLoader(SHOPPING_CART_LOADER, null, this);
+
+        Analytics.logEventBeginCheckedOut(this);
     }
 
     public static void startActivity(Context context) {
@@ -103,6 +106,9 @@ public class ShoppingCartActivity extends AppCompatActivity
                         Snackbar.make(v, R.string.checkout_complete, Snackbar.LENGTH_SHORT).show();
                     }
                 }, DELAY);
+
+                Analytics.logEventEcommercePurchase(this);
+
                 break;
         }
     }
@@ -154,7 +160,6 @@ public class ShoppingCartActivity extends AppCompatActivity
         boolean emptyCart = data.getCount() == 0;
         mTextViewEmptyCart.setVisibility(emptyCart ? View.VISIBLE : View.GONE);
         mButtonCheckout.setEnabled(!emptyCart);
-
     }
 
     @Override

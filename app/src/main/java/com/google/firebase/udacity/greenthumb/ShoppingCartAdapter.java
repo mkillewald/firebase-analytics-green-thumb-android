@@ -84,6 +84,8 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter {
                     PlantCartHelper.removeFromCart(v.getContext(), itemId);
                     notifyItemRemoved(getAdapterPosition());
 
+                    Analytics.logEventRemoveFromCart(v.getContext(), mTextViewItemName.getText().toString());
+
                     Snackbar.make(v, String.format("'%s' removed from cart", mTextViewItemName.getText()), Snackbar.LENGTH_SHORT)
                             .setAction("Undo", new View.OnClickListener() {
                                 @Override
