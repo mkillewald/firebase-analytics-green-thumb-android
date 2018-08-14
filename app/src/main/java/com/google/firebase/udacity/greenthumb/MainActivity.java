@@ -30,6 +30,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.udacity.greenthumb.data.DbContract.PlantEntry;
 import com.google.firebase.udacity.greenthumb.data.Preferences;
 
@@ -65,6 +66,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Kick off the loader
         getSupportLoaderManager().initLoader(PLANT_LOADER, null, this);
+
+        // Call the line below to cause a crash
+        // Any crashes will be reported to Firebase with Crash Reporting
+//        fatalError();
+
+        // Call the line below to report a non-fatal error
+//        reportNonFatalError();
     }
 
     @Override
@@ -169,4 +177,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
     }
+
+    private void fatalError() {
+        // Cause a crash for firebase crash reporting
+//        throw new NullPointerException();
+
+        // Cause a crash for Firebase Crashlytics
+        Crashlytics.getInstance().crash(); // Force a crash
+    }
+
+    private void reportNonFatalError() {
+        // Report a non-fatal error to Firebase Crash Reporting
+//        FirebaseCrash.report(new Exception("Reporting a non-fatal error"));
+
+        // Report a non-fatal error to Firebase Crashlytics
+        Crashlytics.logException(new Exception("Reporting a non-fatal error"));
+
+    }
+
 }
